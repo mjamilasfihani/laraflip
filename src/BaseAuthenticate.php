@@ -24,11 +24,11 @@ abstract class BaseAuthenticate
     /**
      * Connect to Flip
      *
-     * @return \Kitakode\LaravelFlip\Flipable\FlipableInterface
+     * @return \Kitakode\LaravelFlip\Flipable\Flipable|\Kitakode\LaravelFlip\Flipable\FlipableInterface
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    public function toFlip()
+    public static function toFlip()
     {
         /**
          * Define the connectors, than force to connect.
@@ -37,7 +37,7 @@ abstract class BaseAuthenticate
             'byUserpwd',
             'byHttpheader',
         ] as $method) {
-            if (($connector = $this->$method()) instanceof PendingRequest) {
+            if (($connector = (new Authenticate())->$method()) instanceof PendingRequest) {
                 return new Flipable($connector);
             }
         }
