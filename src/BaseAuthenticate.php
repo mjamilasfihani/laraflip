@@ -3,6 +3,7 @@
 namespace Kitakode\LaravelFlip;
 
 use Illuminate\Http\Client\PendingRequest;
+use Kitakode\LaravelFlip\Flipable\Flipable;
 
 abstract class BaseAuthenticate
 {
@@ -23,7 +24,7 @@ abstract class BaseAuthenticate
     /**
      * Connect to Flip
      *
-     * @return null|\Illuminate\Http\Client\PendingRequest
+     * @return \Kitakode\LaravelFlip\Flipable\FlipableInterface
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
@@ -36,11 +37,8 @@ abstract class BaseAuthenticate
             'byUserpwd',
             'byHttpheader',
         ] as $method) {
-            /** @var null|\Illuminate\Http\Client\PendingRequest $connector */
-            $connector = $this->$method();
-
-            if ($connector instanceof PendingRequest) {
-                return $connector;
+            if (($connector = $this->$method()) instanceof PendingRequest) {
+                return new Flipable($connector);
             }
         }
 
