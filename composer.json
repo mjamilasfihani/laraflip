@@ -1,0 +1,79 @@
+{
+    "name": "kitakode/laraflip",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jamil",
+            "email": "jamil@kitakode.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1.0",
+        "laravel/framework": "10.*"
+    },
+    "require-dev": {
+        "driftingly/rector-laravel": "^0.21.0",
+        "laravel/pint": "^1.0",
+        "nunomaduro/larastan": "^2.0",
+        "orchestra/testbench": "^8.5",
+        "pestphp/pest": "^2.8",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "phpstan/phpstan": "^1.10",
+        "psalm/plugin-laravel": "^2.8",
+        "rector/rector": "^0.17.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kitakode\\LaravelFLip\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kitakode\\LaravelFLip\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ],
+        "analyze": [
+            "phpstan analyze",
+            "psalm",
+            "rector process --dry-run"
+        ],
+        "sa": "@analyze",
+        "ci": [
+            "Composer\\Config::disableProcessTimeout",
+            "@cs",
+            "@deduplicate",
+            "@inspect",
+            "@analyze",
+            "@test"
+        ],
+        "cs": "pint --test -v",
+        "cs-fix": "pint -v",
+        "style": "@style-fix",
+        "deduplicate": "",
+        "inspect": "",
+        "mutate": "",
+        "test": "pest"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kitakode\\LaravelFlip\\LaravelFlipServiceProvider"
+            ]
+        }
+    }
+}
