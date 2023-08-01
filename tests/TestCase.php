@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kitakode\LaravelFLip\Tests;
+namespace Kitakode\LaravelFlip\Tests;
 
 use Illuminate\Config\Repository;
 use Kitakode\LaravelFlip\LaravelFlipServiceProvider;
